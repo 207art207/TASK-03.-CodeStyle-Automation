@@ -79,7 +79,7 @@ bool e1000e_check_mng_mode_generic(struct e1000_hw *hw)
 	u32 fwsm = er32(FWSM);
 
 	return (fwsm & E1000_FWSM_MODE_MASK) ==
-	    (E1000_MNG_IAMT_MODE << E1000_FWSM_MODE_SHIFT);
+	       (E1000_MNG_IAMT_MODE << E1000_FWSM_MODE_SHIFT);
 }
 
 /**
@@ -118,8 +118,8 @@ bool e1000e_enable_tx_pkt_filtering(struct e1000_hw *hw)
 	len = E1000_MNG_DHCP_COOKIE_LENGTH >> 2;
 	offset = E1000_MNG_DHCP_COOKIE_OFFSET >> 2;
 	for (i = 0; i < len; i++)
-		*(buffer + i) = E1000_READ_REG_ARRAY(hw, E1000_HOST_IF,
-						     offset + i);
+		*(buffer + i) =
+			E1000_READ_REG_ARRAY(hw, E1000_HOST_IF, offset + i);
 	hdr_csum = hdr->checksum;
 	hdr->checksum = 0;
 	csum = e1000_calculate_checksum((u8 *)hdr,
@@ -178,8 +178,8 @@ static s32 e1000_mng_write_cmd_header(struct e1000_hw *hw,
  *  It also does alignment considerations to do the writes in most efficient
  *  way.  Also fills up the sum of the buffer in *buffer parameter.
  **/
-static s32 e1000_mng_host_if_write(struct e1000_hw *hw, u8 *buffer,
-				   u16 length, u16 offset, u8 *sum)
+static s32 e1000_mng_host_if_write(struct e1000_hw *hw, u8 *buffer, u16 length,
+				   u16 offset, u8 *sum)
 {
 	u8 *tmp;
 	u8 *bufptr = buffer;
@@ -264,8 +264,8 @@ s32 e1000e_mng_write_dhcp_info(struct e1000_hw *hw, u8 *buffer, u16 length)
 		return ret_val;
 
 	/* Populate the host interface with the contents of "buffer". */
-	ret_val = e1000_mng_host_if_write(hw, buffer, length,
-					  sizeof(hdr), &(hdr.checksum));
+	ret_val = e1000_mng_host_if_write(hw, buffer, length, sizeof(hdr),
+					  &(hdr.checksum));
 	if (ret_val)
 		return ret_val;
 

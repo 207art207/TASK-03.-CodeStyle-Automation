@@ -27,75 +27,70 @@
 
 struct e1000_info;
 
-#define e_dbg(format, arg...) \
-	netdev_dbg(hw->adapter->netdev, format, ## arg)
-#define e_err(format, arg...) \
-	netdev_err(adapter->netdev, format, ## arg)
-#define e_info(format, arg...) \
-	netdev_info(adapter->netdev, format, ## arg)
-#define e_warn(format, arg...) \
-	netdev_warn(adapter->netdev, format, ## arg)
-#define e_notice(format, arg...) \
-	netdev_notice(adapter->netdev, format, ## arg)
+#define e_dbg(format, arg...) netdev_dbg(hw->adapter->netdev, format, ##arg)
+#define e_err(format, arg...) netdev_err(adapter->netdev, format, ##arg)
+#define e_info(format, arg...) netdev_info(adapter->netdev, format, ##arg)
+#define e_warn(format, arg...) netdev_warn(adapter->netdev, format, ##arg)
+#define e_notice(format, arg...) netdev_notice(adapter->netdev, format, ##arg)
 
 /* Interrupt modes, as used by the IntMode parameter */
-#define E1000E_INT_MODE_LEGACY		0
-#define E1000E_INT_MODE_MSI		1
-#define E1000E_INT_MODE_MSIX		2
+#define E1000E_INT_MODE_LEGACY 0
+#define E1000E_INT_MODE_MSI 1
+#define E1000E_INT_MODE_MSIX 2
 
 /* Tx/Rx descriptor defines */
-#define E1000_DEFAULT_TXD		256
-#define E1000_MAX_TXD			4096
-#define E1000_MIN_TXD			64
+#define E1000_DEFAULT_TXD 256
+#define E1000_MAX_TXD 4096
+#define E1000_MIN_TXD 64
 
-#define E1000_DEFAULT_RXD		256
-#define E1000_MAX_RXD			4096
-#define E1000_MIN_RXD			64
+#define E1000_DEFAULT_RXD 256
+#define E1000_MAX_RXD 4096
+#define E1000_MIN_RXD 64
 
-#define E1000_MIN_ITR_USECS		10 /* 100000 irq/sec */
-#define E1000_MAX_ITR_USECS		10000 /* 100    irq/sec */
+#define E1000_MIN_ITR_USECS 10 /* 100000 irq/sec */
+#define E1000_MAX_ITR_USECS 10000 /* 100    irq/sec */
 
-#define E1000_FC_PAUSE_TIME		0x0680 /* 858 usec */
+#define E1000_FC_PAUSE_TIME 0x0680 /* 858 usec */
 
 /* How many Tx Descriptors do we need to call netif_wake_queue ? */
 /* How many Rx Buffers do we bundle into one write to the hardware ? */
-#define E1000_RX_BUFFER_WRITE		16 /* Must be power of 2 */
+#define E1000_RX_BUFFER_WRITE 16 /* Must be power of 2 */
 
-#define AUTO_ALL_MODES			0
-#define E1000_EEPROM_APME		0x0400
+#define AUTO_ALL_MODES 0
+#define E1000_EEPROM_APME 0x0400
 
-#define E1000_MNG_VLAN_NONE		0xFFFF
+#define E1000_MNG_VLAN_NONE 0xFFFF
 
-#define DEFAULT_JUMBO			9234
+#define DEFAULT_JUMBO 9234
 
 /* Time to wait before putting the device into D3 if there's no link (in ms). */
-#define LINK_TIMEOUT		100
+#define LINK_TIMEOUT 100
 
 /* Count for polling __E1000_RESET condition every 10-20msec.
  * Experimentation has shown the reset can take approximately 210msec.
  */
-#define E1000_CHECK_RESET_COUNT		25
+#define E1000_CHECK_RESET_COUNT 25
 
-#define PCICFG_DESC_RING_STATUS		0xe4
-#define FLUSH_DESC_REQUIRED		0x100
+#define PCICFG_DESC_RING_STATUS 0xe4
+#define FLUSH_DESC_REQUIRED 0x100
 
 /* in the case of WTHRESH, it appears at least the 82571/2 hardware
  * writes back 4 descriptors when WTHRESH=5, and 3 descriptors when
  * WTHRESH=4, so a setting of 5 gives the most efficient bus
  * utilization but to avoid possible Tx stalls, set it to 1
  */
-#define E1000_TXDCTL_DMA_BURST_ENABLE                          \
-	(E1000_TXDCTL_GRAN | /* set descriptor granularity */  \
-	 E1000_TXDCTL_COUNT_DESC |                             \
-	 (1u << 16) | /* wthresh must be +1 more than desired */\
-	 (1u << 8)  | /* hthresh */                             \
-	 0x1f)        /* pthresh */
+#define E1000_TXDCTL_DMA_BURST_ENABLE                            \
+	(E1000_TXDCTL_GRAN | /* set descriptor granularity */    \
+	 E1000_TXDCTL_COUNT_DESC |                               \
+	 (1u << 16) | /* wthresh must be +1 more than desired */ \
+	 (1u << 8) | /* hthresh */                               \
+	 0x1f) /* pthresh */
 
-#define E1000_RXDCTL_DMA_BURST_ENABLE                          \
-	(0x01000000 | /* set descriptor granularity */         \
-	 (4u << 16) | /* set writeback threshold    */         \
-	 (4u << 8)  | /* set prefetch threshold     */         \
-	 0x20)        /* set hthresh                */
+#define E1000_RXDCTL_DMA_BURST_ENABLE                  \
+	(0x01000000 | /* set descriptor granularity */ \
+	 (4u << 16) | /* set writeback threshold    */ \
+	 (4u << 8) | /* set prefetch threshold     */  \
+	 0x20) /* set hthresh                */
 
 #define E1000_TIDV_FPD BIT(31)
 #define E1000_RDTR_FPD BIT(31)
@@ -152,11 +147,11 @@ struct e1000_buffer {
 };
 
 struct e1000_ring {
-	struct e1000_adapter *adapter;	/* back pointer to adapter */
-	void *desc;			/* pointer to ring memory  */
-	dma_addr_t dma;			/* phys address of ring    */
-	unsigned int size;		/* length of ring in bytes */
-	unsigned int count;		/* number of desc. in ring */
+	struct e1000_adapter *adapter; /* back pointer to adapter */
+	void *desc; /* pointer to ring memory  */
+	dma_addr_t dma; /* phys address of ring    */
+	unsigned int size; /* length of ring in bytes */
+	unsigned int count; /* number of desc. in ring */
 
 	u16 next_to_use;
 	u16 next_to_clean;
@@ -178,14 +173,14 @@ struct e1000_ring {
 
 /* PHY register snapshot values */
 struct e1000_phy_regs {
-	u16 bmcr;		/* basic mode control register    */
-	u16 bmsr;		/* basic mode status register     */
-	u16 advertise;		/* auto-negotiation advertisement */
-	u16 lpa;		/* link partner ability register  */
-	u16 expansion;		/* auto-negotiation expansion reg */
-	u16 ctrl1000;		/* 1000BASE-T control register    */
-	u16 stat1000;		/* 1000BASE-T status register     */
-	u16 estatus;		/* extended status register       */
+	u16 bmcr; /* basic mode control register    */
+	u16 bmsr; /* basic mode status register     */
+	u16 advertise; /* auto-negotiation advertisement */
+	u16 lpa; /* link partner ability register  */
+	u16 expansion; /* auto-negotiation expansion reg */
+	u16 ctrl1000; /* 1000BASE-T control register    */
+	u16 stat1000; /* 1000BASE-T status register     */
+	u16 estatus; /* extended status register       */
 };
 
 /* board specific private data structure */
@@ -222,8 +217,8 @@ struct e1000_adapter {
 
 	struct napi_struct napi;
 
-	unsigned int uncorr_errors;	/* uncorrectable ECC errors */
-	unsigned int corr_errors;	/* correctable ECC errors */
+	unsigned int uncorr_errors; /* uncorrectable ECC errors */
+	unsigned int corr_errors; /* correctable ECC errors */
 	unsigned int restart_queue;
 	u32 txd_cmd;
 
@@ -284,7 +279,7 @@ struct e1000_adapter {
 	/* structs defined in e1000_hw.h */
 	struct e1000_hw hw;
 
-	spinlock_t stats64_lock;	/* protects statistics counters */
+	spinlock_t stats64_lock; /* protects statistics counters */
 	struct e1000_hw_stats stats;
 	struct e1000_phy_info phy_info;
 	struct e1000_phy_stats phy_stats;
@@ -325,7 +320,7 @@ struct e1000_adapter {
 	struct sk_buff *tx_hwtstamp_skb;
 	unsigned long tx_hwtstamp_start;
 	struct work_struct tx_hwtstamp_work;
-	spinlock_t systim_lock;	/* protects SYSTIML/H regsters */
+	spinlock_t systim_lock; /* protects SYSTIML/H regsters */
 	struct cyclecounter cc;
 	struct timecounter tc;
 	struct ptp_clock *ptp_clock;
@@ -337,12 +332,12 @@ struct e1000_adapter {
 };
 
 struct e1000_info {
-	enum e1000_mac_type	mac;
-	unsigned int		flags;
-	unsigned int		flags2;
-	u32			pba;
-	u32			max_hw_frame_size;
-	s32			(*get_variants)(struct e1000_adapter *);
+	enum e1000_mac_type mac;
+	unsigned int flags;
+	unsigned int flags2;
+	u32 pba;
+	u32 max_hw_frame_size;
+	s32 (*get_variants)(struct e1000_adapter *);
 	const struct e1000_mac_operations *mac_ops;
 	const struct e1000_phy_operations *phy_ops;
 	const struct e1000_nvm_operations *nvm_ops;
@@ -378,26 +373,26 @@ s32 e1000e_get_base_timinca(struct e1000_adapter *adapter, u32 *timinca);
  * Re-arranging:
  *   max_adj = floor(((max_incval - base_incval) * 1billion) / 1billion)
  */
-#define INCVALUE_96MHZ		125
-#define INCVALUE_SHIFT_96MHZ	17
-#define INCPERIOD_SHIFT_96MHZ	2
-#define INCPERIOD_96MHZ		(12 >> INCPERIOD_SHIFT_96MHZ)
-#define MAX_PPB_96MHZ		23999900 /* 23,999,900 ppb */
+#define INCVALUE_96MHZ 125
+#define INCVALUE_SHIFT_96MHZ 17
+#define INCPERIOD_SHIFT_96MHZ 2
+#define INCPERIOD_96MHZ (12 >> INCPERIOD_SHIFT_96MHZ)
+#define MAX_PPB_96MHZ 23999900 /* 23,999,900 ppb */
 
-#define INCVALUE_25MHZ		40
-#define INCVALUE_SHIFT_25MHZ	18
-#define INCPERIOD_25MHZ		1
-#define MAX_PPB_25MHZ		599999900 /* 599,999,900 ppb */
+#define INCVALUE_25MHZ 40
+#define INCVALUE_SHIFT_25MHZ 18
+#define INCPERIOD_25MHZ 1
+#define MAX_PPB_25MHZ 599999900 /* 599,999,900 ppb */
 
-#define INCVALUE_24MHZ		125
-#define INCVALUE_SHIFT_24MHZ	14
-#define INCPERIOD_24MHZ		3
-#define MAX_PPB_24MHZ		999999999 /* 999,999,999 ppb */
+#define INCVALUE_24MHZ 125
+#define INCVALUE_SHIFT_24MHZ 14
+#define INCPERIOD_24MHZ 3
+#define MAX_PPB_24MHZ 999999999 /* 999,999,999 ppb */
 
-#define INCVALUE_38400KHZ	26
-#define INCVALUE_SHIFT_38400KHZ	19
-#define INCPERIOD_38400KHZ	1
-#define MAX_PPB_38400KHZ	230769100 /* 230,769,100 ppb */
+#define INCVALUE_38400KHZ 26
+#define INCVALUE_SHIFT_38400KHZ 19
+#define INCPERIOD_38400KHZ 1
+#define MAX_PPB_38400KHZ 230769100 /* 230,769,100 ppb */
 
 /* Another drawback of scaling the incvalue by a large factor is the
  * 64-bit SYSTIM register overflows more quickly.  This is dealt with
@@ -408,69 +403,69 @@ s32 e1000e_get_base_timinca(struct e1000_adapter *adapter, u32 *timinca);
  * 96MHz	47-bit	2^(47-INCPERIOD_SHIFT_96MHz) / 10^9 / 3600 = 9.77 hrs
  * 25MHz	46-bit	2^46 / 10^9 / 3600 = 19.55 hours
  */
-#define E1000_SYSTIM_OVERFLOW_PERIOD	(HZ * 60 * 60 * 4)
-#define E1000_MAX_82574_SYSTIM_REREADS	50
-#define E1000_82574_SYSTIM_EPSILON	(1ULL << 35ULL)
+#define E1000_SYSTIM_OVERFLOW_PERIOD (HZ * 60 * 60 * 4)
+#define E1000_MAX_82574_SYSTIM_REREADS 50
+#define E1000_82574_SYSTIM_EPSILON (1ULL << 35ULL)
 
 /* hardware capability, feature, and workaround flags */
-#define FLAG_HAS_AMT                      BIT(0)
-#define FLAG_HAS_FLASH                    BIT(1)
-#define FLAG_HAS_HW_VLAN_FILTER           BIT(2)
-#define FLAG_HAS_WOL                      BIT(3)
+#define FLAG_HAS_AMT BIT(0)
+#define FLAG_HAS_FLASH BIT(1)
+#define FLAG_HAS_HW_VLAN_FILTER BIT(2)
+#define FLAG_HAS_WOL BIT(3)
 /* reserved BIT(4) */
-#define FLAG_HAS_CTRLEXT_ON_LOAD          BIT(5)
-#define FLAG_HAS_SWSM_ON_LOAD             BIT(6)
-#define FLAG_HAS_JUMBO_FRAMES             BIT(7)
-#define FLAG_READ_ONLY_NVM                BIT(8)
-#define FLAG_IS_ICH                       BIT(9)
-#define FLAG_HAS_MSIX                     BIT(10)
-#define FLAG_HAS_SMART_POWER_DOWN         BIT(11)
-#define FLAG_IS_QUAD_PORT_A               BIT(12)
-#define FLAG_IS_QUAD_PORT                 BIT(13)
-#define FLAG_HAS_HW_TIMESTAMP             BIT(14)
-#define FLAG_APME_IN_WUC                  BIT(15)
-#define FLAG_APME_IN_CTRL3                BIT(16)
-#define FLAG_APME_CHECK_PORT_B            BIT(17)
-#define FLAG_DISABLE_FC_PAUSE_TIME        BIT(18)
-#define FLAG_NO_WAKE_UCAST                BIT(19)
-#define FLAG_MNG_PT_ENABLED               BIT(20)
-#define FLAG_RESET_OVERWRITES_LAA         BIT(21)
-#define FLAG_TARC_SPEED_MODE_BIT          BIT(22)
-#define FLAG_TARC_SET_BIT_ZERO            BIT(23)
-#define FLAG_RX_NEEDS_RESTART             BIT(24)
-#define FLAG_LSC_GIG_SPEED_DROP           BIT(25)
-#define FLAG_SMART_POWER_DOWN             BIT(26)
-#define FLAG_MSI_ENABLED                  BIT(27)
+#define FLAG_HAS_CTRLEXT_ON_LOAD BIT(5)
+#define FLAG_HAS_SWSM_ON_LOAD BIT(6)
+#define FLAG_HAS_JUMBO_FRAMES BIT(7)
+#define FLAG_READ_ONLY_NVM BIT(8)
+#define FLAG_IS_ICH BIT(9)
+#define FLAG_HAS_MSIX BIT(10)
+#define FLAG_HAS_SMART_POWER_DOWN BIT(11)
+#define FLAG_IS_QUAD_PORT_A BIT(12)
+#define FLAG_IS_QUAD_PORT BIT(13)
+#define FLAG_HAS_HW_TIMESTAMP BIT(14)
+#define FLAG_APME_IN_WUC BIT(15)
+#define FLAG_APME_IN_CTRL3 BIT(16)
+#define FLAG_APME_CHECK_PORT_B BIT(17)
+#define FLAG_DISABLE_FC_PAUSE_TIME BIT(18)
+#define FLAG_NO_WAKE_UCAST BIT(19)
+#define FLAG_MNG_PT_ENABLED BIT(20)
+#define FLAG_RESET_OVERWRITES_LAA BIT(21)
+#define FLAG_TARC_SPEED_MODE_BIT BIT(22)
+#define FLAG_TARC_SET_BIT_ZERO BIT(23)
+#define FLAG_RX_NEEDS_RESTART BIT(24)
+#define FLAG_LSC_GIG_SPEED_DROP BIT(25)
+#define FLAG_SMART_POWER_DOWN BIT(26)
+#define FLAG_MSI_ENABLED BIT(27)
 /* reserved BIT(28) */
-#define FLAG_TSO_FORCE                    BIT(29)
-#define FLAG_RESTART_NOW                  BIT(30)
-#define FLAG_MSI_TEST_FAILED              BIT(31)
+#define FLAG_TSO_FORCE BIT(29)
+#define FLAG_RESTART_NOW BIT(30)
+#define FLAG_MSI_TEST_FAILED BIT(31)
 
-#define FLAG2_CRC_STRIPPING               BIT(0)
-#define FLAG2_HAS_PHY_WAKEUP              BIT(1)
-#define FLAG2_IS_DISCARDING               BIT(2)
-#define FLAG2_DISABLE_ASPM_L1             BIT(3)
-#define FLAG2_HAS_PHY_STATS               BIT(4)
-#define FLAG2_HAS_EEE                     BIT(5)
-#define FLAG2_DMA_BURST                   BIT(6)
-#define FLAG2_DISABLE_ASPM_L0S            BIT(7)
-#define FLAG2_DISABLE_AIM                 BIT(8)
-#define FLAG2_CHECK_PHY_HANG              BIT(9)
-#define FLAG2_NO_DISABLE_RX               BIT(10)
-#define FLAG2_PCIM2PCI_ARBITER_WA         BIT(11)
-#define FLAG2_DFLT_CRC_STRIPPING          BIT(12)
-#define FLAG2_CHECK_RX_HWTSTAMP           BIT(13)
-#define FLAG2_CHECK_SYSTIM_OVERFLOW       BIT(14)
-#define FLAG2_ENABLE_S0IX_FLOWS           BIT(15)
-#define FLAG2_DISABLE_K1		   BIT(16)
+#define FLAG2_CRC_STRIPPING BIT(0)
+#define FLAG2_HAS_PHY_WAKEUP BIT(1)
+#define FLAG2_IS_DISCARDING BIT(2)
+#define FLAG2_DISABLE_ASPM_L1 BIT(3)
+#define FLAG2_HAS_PHY_STATS BIT(4)
+#define FLAG2_HAS_EEE BIT(5)
+#define FLAG2_DMA_BURST BIT(6)
+#define FLAG2_DISABLE_ASPM_L0S BIT(7)
+#define FLAG2_DISABLE_AIM BIT(8)
+#define FLAG2_CHECK_PHY_HANG BIT(9)
+#define FLAG2_NO_DISABLE_RX BIT(10)
+#define FLAG2_PCIM2PCI_ARBITER_WA BIT(11)
+#define FLAG2_DFLT_CRC_STRIPPING BIT(12)
+#define FLAG2_CHECK_RX_HWTSTAMP BIT(13)
+#define FLAG2_CHECK_SYSTIM_OVERFLOW BIT(14)
+#define FLAG2_ENABLE_S0IX_FLOWS BIT(15)
+#define FLAG2_DISABLE_K1 BIT(16)
 
-#define E1000_RX_DESC_PS(R, i)	    \
+#define E1000_RX_DESC_PS(R, i) \
 	(&(((union e1000_rx_desc_packet_split *)((R).desc))[i]))
-#define E1000_RX_DESC_EXT(R, i)	    \
+#define E1000_RX_DESC_EXT(R, i) \
 	(&(((union e1000_rx_desc_extended *)((R).desc))[i]))
-#define E1000_GET_DESC(R, i, type)	(&(((struct type *)((R).desc))[i]))
-#define E1000_TX_DESC(R, i)		E1000_GET_DESC(R, i, e1000_tx_desc)
-#define E1000_CONTEXT_DESC(R, i)	E1000_GET_DESC(R, i, e1000_context_desc)
+#define E1000_GET_DESC(R, i, type) (&(((struct type *)((R).desc))[i]))
+#define E1000_TX_DESC(R, i) E1000_GET_DESC(R, i, e1000_tx_desc)
+#define E1000_CONTEXT_DESC(R, i) E1000_GET_DESC(R, i, e1000_context_desc)
 
 enum e1000_state_t {
 	__E1000_TESTING,
@@ -604,13 +599,13 @@ static inline u32 __er32(struct e1000_hw *hw, unsigned long reg)
 	return readl(hw->hw_addr + reg);
 }
 
-#define er32(reg)	__er32(hw, E1000_##reg)
+#define er32(reg) __er32(hw, E1000_##reg)
 
 void __ew32(struct e1000_hw *hw, unsigned long reg, u32 val);
 
-#define ew32(reg, val)	__ew32(hw, E1000_##reg, (val))
+#define ew32(reg, val) __ew32(hw, E1000_##reg, (val))
 
-#define e1e_flush()	er32(STATUS)
+#define e1e_flush() er32(STATUS)
 
 #define E1000_WRITE_REG_ARRAY(a, reg, offset, value) \
 	(__ew32((a), (reg + ((offset) << 2)), (value)))

@@ -10,22 +10,22 @@
 int ext4_inode_journal_mode(struct inode *inode)
 {
 	if (EXT4_JOURNAL(inode) == NULL)
-		return EXT4_INODE_WRITEBACK_DATA_MODE;	/* writeback */
+		return EXT4_INODE_WRITEBACK_DATA_MODE; /* writeback */
 	/* We do not support data journalling with delayed allocation */
 	if (!S_ISREG(inode->i_mode) ||
 	    ext4_test_inode_flag(inode, EXT4_INODE_EA_INODE) ||
 	    test_opt(inode->i_sb, DATA_FLAGS) == EXT4_MOUNT_JOURNAL_DATA ||
 	    (ext4_test_inode_flag(inode, EXT4_INODE_JOURNAL_DATA) &&
-	    !test_opt(inode->i_sb, DELALLOC))) {
+	     !test_opt(inode->i_sb, DELALLOC))) {
 		/* We do not support data journalling for encrypted data */
 		if (S_ISREG(inode->i_mode) && IS_ENCRYPTED(inode))
-			return EXT4_INODE_ORDERED_DATA_MODE;  /* ordered */
-		return EXT4_INODE_JOURNAL_DATA_MODE;	/* journal data */
+			return EXT4_INODE_ORDERED_DATA_MODE; /* ordered */
+		return EXT4_INODE_JOURNAL_DATA_MODE; /* journal data */
 	}
 	if (test_opt(inode->i_sb, DATA_FLAGS) == EXT4_MOUNT_ORDERED_DATA)
-		return EXT4_INODE_ORDERED_DATA_MODE;	/* ordered */
+		return EXT4_INODE_ORDERED_DATA_MODE; /* ordered */
 	if (test_opt(inode->i_sb, DATA_FLAGS) == EXT4_MOUNT_WRITEBACK_DATA)
-		return EXT4_INODE_WRITEBACK_DATA_MODE;	/* writeback */
+		return EXT4_INODE_WRITEBACK_DATA_MODE; /* writeback */
 	BUG();
 }
 
@@ -43,7 +43,6 @@ static handle_t *ext4_get_nojournal(void)
 	current->journal_info = handle;
 	return handle;
 }
-
 
 /* Decrement the non-pointer handle value */
 static void ext4_put_nojournal(handle_t *handle)
@@ -89,21 +88,18 @@ static int ext4_journal_check_start(struct super_block *sb)
 	return 0;
 }
 
-handle_t *__ext4_journal_start_sb(struct inode *inode,
-				  struct super_block *sb, unsigned int line,
-				  int type, int blocks, int rsv_blocks,
-				  int revoke_creds)
+handle_t *__ext4_journal_start_sb(struct inode *inode, struct super_block *sb,
+				  unsigned int line, int type, int blocks,
+				  int rsv_blocks, int revoke_creds)
 {
 	journal_t *journal;
 	int err;
 	if (inode)
 		trace_ext4_journal_start_inode(inode, blocks, rsv_blocks,
-					revoke_creds, type,
-					_RET_IP_);
+					       revoke_creds, type, _RET_IP_);
 	else
 		trace_ext4_journal_start_sb(sb, blocks, rsv_blocks,
-					revoke_creds, type,
-					_RET_IP_);
+					    revoke_creds, type, _RET_IP_);
 	err = ext4_journal_check_start(sb);
 	if (err < 0)
 		return ERR_PTR(err);
@@ -152,8 +148,8 @@ handle_t *__ext4_journal_start_reserved(handle_t *handle, unsigned int line,
 		return ext4_get_nojournal();
 
 	sb = handle->h_journal->j_private;
-	trace_ext4_journal_start_reserved(sb,
-				jbd2_handle_buffer_credits(handle), _RET_IP_);
+	trace_ext4_journal_start_reserved(
+		sb, jbd2_handle_buffer_credits(handle), _RET_IP_);
 	err = ext4_journal_check_start(sb);
 	if (err < 0) {
 		jbd2_journal_free_reserved(handle);
@@ -183,8 +179,8 @@ int __ext4_journal_ensure_credits(handle_t *handle, int check_cred,
 
 static void ext4_journal_abort_handle(const char *caller, unsigned int line,
 				      const char *err_fn,
-				      struct buffer_head *bh,
-				      handle_t *handle, int err)
+				      struct buffer_head *bh, handle_t *handle,
+				      int err)
 {
 	char nbuf[16];
 	const char *errstr = ext4_decode_error(NULL, err, nbuf);
@@ -220,7 +216,8 @@ static void ext4_check_bdev_write_error(struct super_block *sb)
 	 */
 	if (errseq_check(&mapping->wb_err, READ_ONCE(sbi->s_bdev_wb_err))) {
 		spin_lock(&sbi->s_bdev_wb_lock);
-		err = errseq_check_and_advance(&mapping->wb_err, &sbi->s_bdev_wb_err);
+		err = errseq_check_and_advance(&mapping->wb_err,
+					       &sbi->s_bdev_wb_err);
 		spin_unlock(&sbi->s_bdev_wb_lock);
 		if (err)
 			ext4_error_err(sb, -err,
@@ -250,8 +247,8 @@ int __ext4_journal_get_write_access(const char *where, unsigned int line,
 	    !ext4_has_feature_metadata_csum(sb))
 		return 0;
 	BUG_ON(trigger_type >= EXT4_JOURNAL_TRIGGER_COUNT);
-	jbd2_journal_set_triggers(bh,
-		&EXT4_SB(sb)->s_journal_triggers[trigger_type].tr_triggers);
+	jbd2_journal_set_triggers(
+		bh, &EXT4_SB(sb)->s_journal_triggers[trigger_type].tr_triggers);
 	return 0;
 }
 
@@ -265,8 +262,8 @@ int __ext4_journal_get_write_access(const char *where, unsigned int line,
  * still needs to be revoked.
  */
 int __ext4_forget(const char *where, unsigned int line, handle_t *handle,
-		  int is_metadata, struct inode *inode,
-		  struct buffer_head *bh, ext4_fsblk_t blocknr)
+		  int is_metadata, struct inode *inode, struct buffer_head *bh,
+		  ext4_fsblk_t blocknr)
 {
 	int err;
 
@@ -276,8 +273,8 @@ int __ext4_forget(const char *where, unsigned int line, handle_t *handle,
 	BUFFER_TRACE(bh, "enter");
 
 	ext4_debug("forgetting bh %p: is_metadata=%d, mode %o, data mode %x\n",
-		  bh, is_metadata, inode->i_mode,
-		  test_opt(inode->i_sb, DATA_FLAGS));
+		   bh, is_metadata, inode->i_mode,
+		   test_opt(inode->i_sb, DATA_FLAGS));
 
 	/*
 	 * In the no journal case, we should wait for the ongoing buffer
@@ -316,8 +313,8 @@ int __ext4_forget(const char *where, unsigned int line, handle_t *handle,
 	BUFFER_TRACE(bh, "call jbd2_journal_revoke");
 	err = jbd2_journal_revoke(handle, blocknr, bh);
 	if (err) {
-		ext4_journal_abort_handle(where, line, __func__,
-					  bh, handle, err);
+		ext4_journal_abort_handle(where, line, __func__, bh, handle,
+					  err);
 		__ext4_error(inode->i_sb, where, line, true, -err, 0,
 			     "error %d when attempting revoke", err);
 	}
@@ -326,9 +323,9 @@ int __ext4_forget(const char *where, unsigned int line, handle_t *handle,
 }
 
 int __ext4_journal_get_create_access(const char *where, unsigned int line,
-				handle_t *handle, struct super_block *sb,
-				struct buffer_head *bh,
-				enum ext4_journal_trigger_type trigger_type)
+				     handle_t *handle, struct super_block *sb,
+				     struct buffer_head *bh,
+				     enum ext4_journal_trigger_type trigger_type)
 {
 	int err;
 
@@ -345,8 +342,8 @@ int __ext4_journal_get_create_access(const char *where, unsigned int line,
 	    !ext4_has_feature_metadata_csum(sb))
 		return 0;
 	BUG_ON(trigger_type >= EXT4_JOURNAL_TRIGGER_COUNT);
-	jbd2_journal_set_triggers(bh,
-		&EXT4_SB(sb)->s_journal_triggers[trigger_type].tr_triggers);
+	jbd2_journal_set_triggers(
+		bh, &EXT4_SB(sb)->s_journal_triggers[trigger_type].tr_triggers);
 	return 0;
 }
 
@@ -371,19 +368,16 @@ int __ext4_handle_dirty_metadata(const char *where, unsigned int line,
 				pr_err("EXT4: jbd2_journal_dirty_metadata "
 				       "failed: handle type %u started at "
 				       "line %u, credits %u/%u, errcode %d",
-				       handle->h_type,
-				       handle->h_line_no,
+				       handle->h_type, handle->h_line_no,
 				       handle->h_requested_credits,
 				       jbd2_handle_buffer_credits(handle), err);
 				return err;
 			}
-			ext4_error_inode(inode, where, line,
-					 bh->b_blocknr,
+			ext4_error_inode(inode, where, line, bh->b_blocknr,
 					 "journal_dirty_metadata failed: "
 					 "handle type %u started at line %u, "
 					 "credits %u/%u, errcode %d",
-					 handle->h_type,
-					 handle->h_line_no,
+					 handle->h_type, handle->h_line_no,
 					 handle->h_requested_credits,
 					 jbd2_handle_buffer_credits(handle),
 					 err);
@@ -397,8 +391,8 @@ int __ext4_handle_dirty_metadata(const char *where, unsigned int line,
 		if (inode && inode_needs_sync(inode)) {
 			sync_dirty_buffer(bh);
 			if (buffer_req(bh) && !buffer_uptodate(bh)) {
-				ext4_error_inode_err(inode, where, line,
-						     bh->b_blocknr, EIO,
+				ext4_error_inode_err(
+					inode, where, line, bh->b_blocknr, EIO,
 					"IO error syncing itable block");
 				err = -EIO;
 			}
