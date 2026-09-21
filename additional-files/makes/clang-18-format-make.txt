@@ -33,6 +33,7 @@ git diff --stat -- dummy/src dummy/include
  
 ======================================
 
+git diff -- task03/dummy/src/manage.c
 diff --git a/dummy/src/manage.c b/dummy/src/manage.c
 index c4c9b20..238a945 100644
 --- a/dummy/src/manage.c
