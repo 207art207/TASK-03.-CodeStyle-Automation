@@ -481,3 +481,84 @@ parsed it and verified the source formatting.
 ### Execution log
 
 - [Chromium 22 formatting results](additional-files/makes/clang-chromium-22-format-make.txt)
+
+## Final conclusions
+
+The experiments compared clang-format 18.1.8 and 22.1.8 using eight
+Linux source files and two formatting styles: the original Linux
+configuration and the Chromium preset.
+
+### Summary of source changes
+
+Each row describes changes relative to the preceding project state.
+The statistics include only `.c` and `.h` files, excluding configuration
+files, logs, and documentation.
+
+| Transition | Files changed | Insertions | Deletions |
+|---|---:|---:|---:|
+| Original sources → Linux formatting with version 18 | 8 | 639 | 687 |
+| Linux formatting: version 18 → version 22 | 0 | 0 | 0 |
+| Linux formatting → Chromium 18 | 8 | 4098 | 4208 |
+| Chromium 18 → Chromium 22 | 0 | 0 | 0 |
+
+### Effect of formatting style and formatter version
+
+The initial source files did not fully match the formatting produced
+by either selected formatter version with the Linux configuration.
+Formatting with version 18 changed all eight files. Applying version 22
+afterward introduced no additional source changes.
+
+Switching from Linux formatting to Chromium 18 produced the largest
+source diff in the experiment. The changes included indentation,
+tab usage, pointer alignment, brace placement, and line wrapping.
+
+The subsequent transition to Chromium 22 preserved all eight source
+files.
+
+These results do not establish that versions 18 and 22 produce identical
+output for every project or configuration.
+
+### Configuration compatibility
+
+The Chromium configuration dumps differed between versions: version 18
+produced 280 lines, while version 22 produced 358 lines. The differences
+included additional settings, renamed fields, and changes in how option
+values were represented.
+
+Despite these configuration differences, the transition from Chromium 18
+to Chromium 22 did not alter the tested source files.
+
+However, clang-format 18 could not parse the Chromium 22 configuration
+because it contained the unsupported `AlignFunctionDeclarations` key.
+This prevented version 18 from checking the source formatting.
+
+Configuration compatibility and source formatting consistency must
+therefore be assessed separately. A configuration parsing error does not
+demonstrate a formatting violation in the source files.
+
+### Automation and Git observations
+
+The scripts automated recursive formatting checks and formatting of
+`.c` and `.h` files. Checking both versions helped distinguish successful
+formatting from configuration incompatibility.
+
+Large formatting changes produced substantial Git diffs because
+indentation and line wrapping affected many existing lines.
+`git diff --stat` provided useful summaries,
+while individual file diffs showed the specific formatting changes.
+
+Separate commits and execution logs preserved the results of each
+transition and made the experiments easier to compare.
+
+### Final project state and limitations
+
+The final project uses the Chromium configuration exported by
+clang-format 22.1.8 and passes verification with that version.
+
+The combined check returns exit code `2` because clang-format 18 cannot
+read the active configuration. Version 22 still completes its check
+successfully.
+
+The conclusions apply to the selected eight files. Formatting checks
+verify compliance with formatting rules; they do not establish successful
+compilation or correct runtime behavior.
