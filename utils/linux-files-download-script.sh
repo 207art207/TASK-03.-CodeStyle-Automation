@@ -1,31 +1,33 @@
 #!/bin/bash
 set -e
 
-mkdir -p ~/Projects/TASK-03.-CodeStyle-Automation/dummy/{src,include}
+cd ~/Projects/TASK-03.-CodeStyle-Automation
 
-wget -O ~/Projects/TASK-03.-CodeStyle-Automation/dummy/src/ethtool.c \
-https://raw.githubusercontent.com/torvalds/linux/v7.2/drivers/net/ethernet/intel/e1000e/ethtool.c
+mkdir -p dummy/{src,include} utils/tmp
 
-wget -O ~/Projects/TASK-03.-CodeStyle-Automation/dummy/src/manage.c \
-https://raw.githubusercontent.com/torvalds/linux/v7.2/drivers/net/ethernet/intel/e1000e/manage.c
+wget -O utils/tmp/linux-7.2.tar.xz \
+    https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-7.2.tar.xz
 
-wget -O ~/Projects/TASK-03.-CodeStyle-Automation/dummy/src/file.c \
-https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/ext4/file.c
+tar -xJf utils/tmp/linux-7.2.tar.xz -C utils/tmp \
+    linux-7.2/drivers/net/ethernet/intel/e1000e/ethtool.c \
+    linux-7.2/drivers/net/ethernet/intel/e1000e/manage.c \
+    linux-7.2/fs/ext4/file.c \
+    linux-7.2/fs/ext4/ext4_jbd2.c \
+    linux-7.2/drivers/net/ethernet/intel/e1000e/e1000.h \
+    linux-7.2/drivers/net/ethernet/intel/e1000e/phy.h \
+    linux-7.2/fs/ext4/ext4_extents.h \
+    linux-7.2/fs/ext4/mballoc.h \
+    linux-7.2/.clang-format
 
-wget -O ~/Projects/TASK-03.-CodeStyle-Automation/dummy/src/ext4_jbd2.c \
-https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/ext4/ext4_jbd2.c
+cp utils/tmp/linux-7.2/drivers/net/ethernet/intel/e1000e/{ethtool.c,manage.c} dummy/src/
+cp utils/tmp/linux-7.2/fs/ext4/{file.c,ext4_jbd2.c} dummy/src/
 
-wget -O ~/Projects/TASK-03.-CodeStyle-Automation/dummy/include/e1000.h \
-https://raw.githubusercontent.com/torvalds/linux/v7.2/drivers/net/ethernet/intel/e1000e/e1000.h
+cp utils/tmp/linux-7.2/drivers/net/ethernet/intel/e1000e/{e1000.h,phy.h} dummy/include/
+cp utils/tmp/linux-7.2/fs/ext4/{ext4_extents.h,mballoc.h} dummy/include/
 
-wget -O ~/Projects/TASK-03.-CodeStyle-Automation/dummy/include/phy.h \
-https://raw.githubusercontent.com/torvalds/linux/v7.2/drivers/net/ethernet/intel/e1000e/phy.h
+cp utils/tmp/linux-7.2/.clang-format dummy/.clang-format
 
-wget -O ~/Projects/TASK-03.-CodeStyle-Automation/dummy/include/ext4_extents.h \
-https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/ext4/ext4_extents.h
+echo "Copied 8 source files and .clang-format to dummy."
+wc -c dummy/src/*.c dummy/include/*.h
 
-wget -O ~/Projects/TASK-03.-CodeStyle-Automation/dummy/include/mballoc.h \
-https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/ext4/mballoc.h
-
-wget -O ~/Projects/TASK-03.-CodeStyle-Automation/dummy/.clang-format \
-https://raw.githubusercontent.com/torvalds/linux/v7.2/.clang-format
+rm -rf utils/tmp/
