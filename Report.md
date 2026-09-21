@@ -78,3 +78,102 @@ limited, additional formatting differences may exist within each file.
 
 This check establishes the baseline for the subsequent experiments:
 formatting with each version and comparing the resulting Git diffs.
+
+### Execution logs
+
+- [Clang-format 18 results](additional-files/checks/clang-18-format-check.txt)
+- [Clang-format 22 results](additional-files/checks/clang-22-format-check.txt)
+- [Clang-format results comprasion](additional-files/checks/clang-comp.txt)
+
+## Linux formatting version comparison
+
+### Experiment setup
+
+The eight source files were formatted sequentially with clang-format
+18.1.8 and 22.1.8. The original Linux `.clang-format` configuration
+remained unchanged throughout the experiment.
+
+After each formatting operation, `check_format.sh` checked the project
+with both formatter versions.
+
+### Formatting with clang-format 18
+
+Commands:
+
+```bash
+./clang-format-scripts/make_format_clang-18.sh ./dummy
+./clang-format-scripts/check_format.sh ./dummy
+git diff --stat -- dummy/src dummy/include
+```
+
+Formatting completed successfully. The formatting script's own check
+passed, and the subsequent check reported `[format-pass]` for both
+clang-format 18 and clang-format 22.
+
+Git reported the following changes relative to the original sources:
+
+```text
+8 files changed, 639 insertions(+), 687 deletions(-)
+```
+
+The example diff for `dummy/src/manage.c` shows changes to continuation
+line alignment and line wrapping in expressions, function declarations,
+and function calls.
+
+Git counts replaced and rewrapped lines as deletions and insertions.
+Therefore, this substantial diff does not by itself indicate the
+addition or removal of program functionality.
+
+The formatting changes were recorded in commit `b2d34d4`.
+
+### Formatting with clang-format 22
+
+Commands:
+
+```bash
+./clang-format-scripts/make_format_clang-22.sh ./dummy
+./clang-format-scripts/check_format.sh ./dummy
+git diff --stat -- dummy/src dummy/include
+```
+
+Clang-format 22 was applied to the files already formatted by
+clang-format 18.
+
+Formatting completed successfully, and both formatter versions again
+reported `[format-pass]`.
+
+No additional changes appeared in `dummy/src` or `dummy/include`.
+A comparison of commits `b2d34d4` and `6e60e93` confirmed that the source
+files and `.clang-format` were identical between these two stages.
+
+Commit `6e60e93` recorded the second experiment through changes to the
+logs and the dummy project journal.
+
+### Results and Git statistics
+
+The statistics below include only files in `dummy/src` and
+`dummy/include`, excluding logs and documentation.
+
+| Operation | Files changed | Insertions | Deletions | Check with 18 | Check with 22 |
+|---|---:|---:|---:|---|---|
+| Original sources → clang-format 18 | 8 | 639 | 687 | PASS | PASS |
+| Clang-format 18 output → clang-format 22 | 0 | 0 | 0 | PASS | PASS |
+
+### Conclusions
+
+The original Linux source files required formatting changes under the
+supplied configuration. Applying clang-format 18 changed all eight files.
+
+Switching to clang-format 22 introduced no further changes. For this
+sample and configuration, the output of clang-format 18 was also accepted
+by clang-format 22.
+
+This result does not establish equivalence between the formatter versions
+for other source files or configurations. The experiment verifies
+formatting consistency; it does not verify compilation or runtime behavior.
+
+### Execution logs
+
+- [Clang-format 18 results](additional-files/makes/clang-18-format-make.txt)
+- [Clang-format 22 results](additional-files/makes/clang-22-format-make.txt)
+
