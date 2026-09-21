@@ -397,3 +397,87 @@ consistency; they do not verify compilation or runtime behavior.
 ### Execution log
 
 - [Chromium 18 formatting results](additional-files/makes/clang-chromium-18-format-make.txt)
+
+## Switching to Chromium style with clang-format 22
+
+### Experiment setup
+
+The active configuration in `dummy/.clang-format` was replaced with
+the Chromium configuration exported by clang-format 22.1.8.
+
+The input was the project previously formatted with clang-format 18.1.8
+using the Chromium 18 configuration.
+
+Commands:
+
+```bash
+cp additional-files/chromium-files/chromium-22.clang-format dummy/.clang-format
+
+./clang-format-scripts/make_format_clang-22.sh ./dummy
+./clang-format-scripts/check_format.sh ./dummy
+
+git --no-pager diff --stat -- dummy/src dummy/include
+git --no-pager diff -- dummy/src/manage.c
+```
+
+### Verification results
+
+Formatting with clang-format 22 completed successfully, and the
+formatting script's own verification reported `[format-pass]`.
+
+The subsequent check with both formatter versions produced:
+
+| Formatter | Configuration parsing | Source formatting check |
+|---|---|---|
+| clang-format 18.1.8 | FAIL | Not performed |
+| clang-format 22.1.8 | PASS | PASS |
+
+Clang-format 18 could not read the Chromium 22 configuration:
+
+```text
+error: unknown key 'AlignFunctionDeclarations'
+[error] Configuration is incompatible or invalid.
+```
+
+The error occurred while parsing `.clang-format`, before source
+formatting could be checked by version 18. Therefore, it does not
+demonstrate a formatting violation in the source files.
+
+The script continued with clang-format 22, which accepted the
+configuration and reported `[format-pass]`.
+
+### Git statistics
+
+Both source comparison commands produced empty output. All eight
+`.c` and `.h` files remained unchanged relative to the Chromium 18 stage.
+
+| Compared files | Files changed | Insertions | Deletions |
+|---|---:|---:|---:|
+| `dummy/src` and `dummy/include` | 0 | 0 | 0 |
+| `dummy/.clang-format` | 1 | 91 | 13 |
+
+These statistics exclude the execution log, report, and project journal.
+
+Although the configuration changed substantially, applying clang-format
+22 introduced no additional source changes for this sample.
+
+### Conclusions
+
+The transition from Chromium 18 to Chromium 22 preserved the formatting
+of all eight source files.
+
+However, the newer configuration could not be parsed by clang-format 18.
+This demonstrates that unchanged source formatting and configuration
+compatibility are separate properties.
+
+The result applies to the tested files and configurations. It does not
+establish that the two formatter versions produce identical results
+for every project.
+
+After this transition, the active project configuration requires a
+formatter that supports its settings; clang-format 22.1.8 successfully
+parsed it and verified the source formatting.
+
+### Execution log
+
+- [Chromium 22 formatting results](additional-files/makes/clang-chromium-22-format-make.txt)

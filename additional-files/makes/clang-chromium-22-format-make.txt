@@ -1,0 +1,38 @@
+cp additional-files/chromium-files/chromium-22.clang-format dummy/.clang-format
+cp: overwrite 'dummy/.clang-format'? y
+
+======================================
+
+./clang-format-scripts/make_format_clang-22.sh ./dummy
+
+/home/art207/.local/bin/clang-format-22
+Formatting complete.
+==== CLANG-FORMAT clang-format-22 VERSION ====
+[format-pass] Formatting matches.
+
+======================================
+
+./clang-format-scripts/check_format.sh ./dummy
+
+/home/art207/.local/bin/clang-format-18
+/home/art207/.local/bin/clang-format-22
+==== CLANG-FORMAT clang-format-18 VERSION ====
+/home/art207/Projects/TASK-03.-CodeStyle-Automation/dummy/.clang-format:11:3: error: unknown key 'AlignFunctionDeclarations'
+  AlignFunctionDeclarations: false
+  ^~~~~~~~~~~~~~~~~~~~~~~~~
+Error reading /home/art207/Projects/TASK-03.-CodeStyle-Automation/dummy/.clang-format: Invalid argument
+[error] Configuration is incompatible or invalid.
+
+======================================
+==== CLANG-FORMAT clang-format-22 VERSION ====
+[format-pass] Formatting matches.
+
+======================================
+
+git --no-pager diff --stat -- dummy/src dummy/include
+
+
+======================================
+
+git --no-pager diff -- dummy/src/manage.c
+
