@@ -4,3 +4,4 @@ TASK 03: Add automatic formatting scripts
 TASK 03: Format Linux sources with clang-format 18
 TASK 03: Format Linux sources with clang-format 22
 TASK 03: Document Linux formatting version comparison
+TASK 03: Compare Chromium configurations across versions
