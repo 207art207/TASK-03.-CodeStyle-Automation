@@ -23,8 +23,11 @@ usage() {
     echo "  - .clang-format must exist in the project root"
     echo "  - .c and .h files are searched recursively in the project directory"
     echo
-    printf 'clang-format XX: %s\n' "$CF_XX"
-    printf 'clang-format YY: %s\n' "$CF_YY"
+    echo "clang-format XX: ${CF_XX}"
+    echo "clang-format YY: ${CF_YY}"
+    echo
+    echo
+    echo
 }
 
 formatter_installation_check(){
@@ -72,12 +75,15 @@ for version in "${CF_XX}" "${CF_YY}"; do
 
     if ! "$version" --style=file --dump-config </dev/null >/dev/null; then
         echo "[error] Configuration is incompatible or invalid." >&2
+        echo
         RESULT=2
     elif find . -type f \( -name '*.c' -o -name '*.h' \) \
         -exec "$version" --style=file --dry-run --Werror --ferror-limit=1 {} +; then
-        echo "Formatting matches."
+        echo "[format-pass] Formatting matches."
+        echo
     else
-        echo "[error] Formatting or file-processing errors;"
+        echo "[format-fail] Formatting or file-processing errors;"
+        echo
         if [[ ${RESULT} == 0 ]]; then
             RESULT=1
         fi
@@ -98,12 +104,15 @@ echo "==== SYSTEM CLANG-FORMAT: $(clang-format --version)===="
 
     if ! clang-format --style=file --dump-config </dev/null >/dev/null; then
         echo "[error] Configuration is incompatible or invalid." >&2
+        echo
         RESULT=2
     elif find . -type f \( -name '*.c' -o -name '*.h' \) \
         -exec clang-format --style=file --dry-run --Werror --ferror-limit=1 {} +; then
-        echo "Formatting matches."
+        echo "[format-pass] Formatting matches."
+        echo
     else
-        echo "[error] Formatting or file-processing errors." >&2
+        echo "[format-fail] Formatting or file-processing errors." >&2
+        echo
 
         if [[ $RESULT -eq 0 ]]; then
             RESULT=1
@@ -115,9 +124,9 @@ echo "==== SYSTEM CLANG-FORMAT: $(clang-format --version)===="
 SYSTEM-CLANG-FUNC
 
 main() {
-    usage
-
+    
     if [[ $# -eq 0 ]]; then
+        usage
         return 0
     fi
 
