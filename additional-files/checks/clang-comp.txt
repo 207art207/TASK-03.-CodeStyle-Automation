@@ -1,0 +1,35 @@
+CLANG-FORMAT 18						      |	CLANG-FORMAT 22
+
+./src/ethtool.c:27:39: error: code should be clang-formatted 	./src/ethtool.c:27:39: error: code should be clang-formatted 
+#define E1000E_PRIV_FLAGS_S0IX_ENABLED  BIT(0)			#define E1000E_PRIV_FLAGS_S0IX_ENABLED  BIT(0)
+                                      ^^			                                      ^^
+
+./src/manage.c:81:41: error: code should be clang-formatted [	./src/manage.c:81:41: error: code should be clang-formatted [
+        return (fwsm & E1000_FWSM_MODE_MASK) ==			        return (fwsm & E1000_FWSM_MODE_MASK) ==
+                                               ^		                                               ^
+
+./src/file.c:151:39: error: code should be clang-formatted [-	./src/file.c:151:39: error: code should be clang-formatted [-
+                                     struct pipe_inode_info *	                                     struct pipe_inode_info *
+                                                             	                                                             
+
+./src/ext4_jbd2.c:13:41: error: code should be clang-formatte	./src/ext4_jbd2.c:13:41: error: code should be clang-formatte
+                return EXT4_INODE_WRITEBACK_DATA_MODE;  /* wr	                return EXT4_INODE_WRITEBACK_DATA_MODE;  /* wr
+                                                      ^^	                                                      ^^
+
+./include/e1000.h:30:30: error: code should be clang-formatte	./include/e1000.h:30:30: error: code should be clang-formatte
+#define e_dbg(format, arg...) \					#define e_dbg(format, arg...) \
+                             ^					                             ^
+
+./include/phy.h:71:27: error: code should be clang-formatted 	./include/phy.h:71:27: error: code should be clang-formatted 
+#define E1000_MAX_PHY_ADDR              8			#define E1000_MAX_PHY_ADDR              8
+                          ^^^^^^				                          ^^^^^^
+
+./include/ext4_extents.h:49:8: error: code should be clang-fo	./include/ext4_extents.h:49:8: error: code should be clang-fo
+        __le32  et_checksum;    /* crc32c(uuid+inum+extent_bl	        __le32  et_checksum;    /* crc32c(uuid+inum+extent_bl
+              ^^						              ^^
+
+./include/mballoc.h:30:31: error: code should be clang-format	./include/mballoc.h:30:31: error: code should be clang-format
+#define mb_debug(sb, fmt, ...)                               	#define mb_debug(sb, fmt, ...)                               
+                              ^^				                              ^^
+
+[format-fail] Formatting or file-processing errors.		[format-fail] Formatting or file-processing errors.

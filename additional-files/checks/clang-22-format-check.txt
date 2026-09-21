@@ -1,0 +1,35 @@
+CLANG-FORMAT 22
+
+./src/ethtool.c:27:39: error: code should be clang-formatted [-Wclang-format-violations]
+#define E1000E_PRIV_FLAGS_S0IX_ENABLED  BIT(0)
+                                      ^^
+
+./src/manage.c:81:41: error: code should be clang-formatted [-Wclang-format-violations]
+        return (fwsm & E1000_FWSM_MODE_MASK) ==
+                                               ^
+
+./src/file.c:151:39: error: code should be clang-formatted [-Wclang-format-violations]
+                                     struct pipe_inode_info *pipe,
+                                                                  ^
+
+./src/ext4_jbd2.c:13:41: error: code should be clang-formatted [-Wclang-format-violations]
+                return EXT4_INODE_WRITEBACK_DATA_MODE;  /* writeback */
+                                                      ^^
+
+./include/e1000.h:30:30: error: code should be clang-formatted [-Wclang-format-violations]
+#define e_dbg(format, arg...) \
+                             ^
+
+./include/phy.h:71:27: error: code should be clang-formatted [-Wclang-format-violations]
+#define E1000_MAX_PHY_ADDR              8
+                          ^^^^^^
+
+./include/ext4_extents.h:49:8: error: code should be clang-formatted [-Wclang-format-violations]
+        __le32  et_checksum;    /* crc32c(uuid+inum+extent_block) */
+              ^^
+
+./include/mballoc.h:30:31: error: code should be clang-formatted [-Wclang-format-violations]
+#define mb_debug(sb, fmt, ...)                                          \
+                              ^^
+
+[format-fail] Formatting or file-processing errors.
