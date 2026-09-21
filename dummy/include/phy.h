@@ -4,80 +4,82 @@
 #ifndef _E1000E_PHY_H_
 #define _E1000E_PHY_H_
 
-s32 e1000e_check_downshift(struct e1000_hw *hw);
-s32 e1000_check_polarity_m88(struct e1000_hw *hw);
-s32 e1000_check_polarity_igp(struct e1000_hw *hw);
-s32 e1000_check_polarity_ife(struct e1000_hw *hw);
-s32 e1000e_check_reset_block_generic(struct e1000_hw *hw);
-s32 e1000e_copper_link_setup_igp(struct e1000_hw *hw);
-s32 e1000e_copper_link_setup_m88(struct e1000_hw *hw);
-s32 e1000e_phy_force_speed_duplex_igp(struct e1000_hw *hw);
-s32 e1000e_phy_force_speed_duplex_m88(struct e1000_hw *hw);
-s32 e1000_phy_force_speed_duplex_ife(struct e1000_hw *hw);
-s32 e1000e_get_cable_length_m88(struct e1000_hw *hw);
-s32 e1000e_get_cable_length_igp_2(struct e1000_hw *hw);
-s32 e1000e_get_cfg_done_generic(struct e1000_hw *hw);
-s32 e1000e_get_phy_id(struct e1000_hw *hw);
-s32 e1000e_get_phy_info_igp(struct e1000_hw *hw);
-s32 e1000e_get_phy_info_m88(struct e1000_hw *hw);
-s32 e1000_get_phy_info_ife(struct e1000_hw *hw);
-s32 e1000e_phy_sw_reset(struct e1000_hw *hw);
-void e1000e_phy_force_speed_duplex_setup(struct e1000_hw *hw, u16 *phy_ctrl);
-s32 e1000e_phy_hw_reset_generic(struct e1000_hw *hw);
-s32 e1000e_phy_reset_dsp(struct e1000_hw *hw);
-s32 e1000e_read_kmrn_reg(struct e1000_hw *hw, u32 offset, u16 *data);
-s32 e1000e_read_kmrn_reg_locked(struct e1000_hw *hw, u32 offset, u16 *data);
-s32 e1000_set_page_igp(struct e1000_hw *hw, u16 page);
-s32 e1000e_read_phy_reg_igp(struct e1000_hw *hw, u32 offset, u16 *data);
-s32 e1000e_read_phy_reg_igp_locked(struct e1000_hw *hw, u32 offset, u16 *data);
-s32 e1000e_read_phy_reg_m88(struct e1000_hw *hw, u32 offset, u16 *data);
-s32 e1000e_set_d3_lplu_state(struct e1000_hw *hw, bool active);
-s32 e1000e_setup_copper_link(struct e1000_hw *hw);
-s32 e1000e_write_kmrn_reg(struct e1000_hw *hw, u32 offset, u16 data);
-s32 e1000e_write_kmrn_reg_locked(struct e1000_hw *hw, u32 offset, u16 data);
-s32 e1000e_write_phy_reg_igp(struct e1000_hw *hw, u32 offset, u16 data);
-s32 e1000e_write_phy_reg_igp_locked(struct e1000_hw *hw, u32 offset, u16 data);
-s32 e1000e_write_phy_reg_m88(struct e1000_hw *hw, u32 offset, u16 data);
-s32 e1000e_phy_has_link_generic(struct e1000_hw *hw, u32 iterations,
-				u32 usec_interval, bool *success);
-s32 e1000e_phy_init_script_igp3(struct e1000_hw *hw);
+s32 e1000e_check_downshift(struct e1000_hw* hw);
+s32 e1000_check_polarity_m88(struct e1000_hw* hw);
+s32 e1000_check_polarity_igp(struct e1000_hw* hw);
+s32 e1000_check_polarity_ife(struct e1000_hw* hw);
+s32 e1000e_check_reset_block_generic(struct e1000_hw* hw);
+s32 e1000e_copper_link_setup_igp(struct e1000_hw* hw);
+s32 e1000e_copper_link_setup_m88(struct e1000_hw* hw);
+s32 e1000e_phy_force_speed_duplex_igp(struct e1000_hw* hw);
+s32 e1000e_phy_force_speed_duplex_m88(struct e1000_hw* hw);
+s32 e1000_phy_force_speed_duplex_ife(struct e1000_hw* hw);
+s32 e1000e_get_cable_length_m88(struct e1000_hw* hw);
+s32 e1000e_get_cable_length_igp_2(struct e1000_hw* hw);
+s32 e1000e_get_cfg_done_generic(struct e1000_hw* hw);
+s32 e1000e_get_phy_id(struct e1000_hw* hw);
+s32 e1000e_get_phy_info_igp(struct e1000_hw* hw);
+s32 e1000e_get_phy_info_m88(struct e1000_hw* hw);
+s32 e1000_get_phy_info_ife(struct e1000_hw* hw);
+s32 e1000e_phy_sw_reset(struct e1000_hw* hw);
+void e1000e_phy_force_speed_duplex_setup(struct e1000_hw* hw, u16* phy_ctrl);
+s32 e1000e_phy_hw_reset_generic(struct e1000_hw* hw);
+s32 e1000e_phy_reset_dsp(struct e1000_hw* hw);
+s32 e1000e_read_kmrn_reg(struct e1000_hw* hw, u32 offset, u16* data);
+s32 e1000e_read_kmrn_reg_locked(struct e1000_hw* hw, u32 offset, u16* data);
+s32 e1000_set_page_igp(struct e1000_hw* hw, u16 page);
+s32 e1000e_read_phy_reg_igp(struct e1000_hw* hw, u32 offset, u16* data);
+s32 e1000e_read_phy_reg_igp_locked(struct e1000_hw* hw, u32 offset, u16* data);
+s32 e1000e_read_phy_reg_m88(struct e1000_hw* hw, u32 offset, u16* data);
+s32 e1000e_set_d3_lplu_state(struct e1000_hw* hw, bool active);
+s32 e1000e_setup_copper_link(struct e1000_hw* hw);
+s32 e1000e_write_kmrn_reg(struct e1000_hw* hw, u32 offset, u16 data);
+s32 e1000e_write_kmrn_reg_locked(struct e1000_hw* hw, u32 offset, u16 data);
+s32 e1000e_write_phy_reg_igp(struct e1000_hw* hw, u32 offset, u16 data);
+s32 e1000e_write_phy_reg_igp_locked(struct e1000_hw* hw, u32 offset, u16 data);
+s32 e1000e_write_phy_reg_m88(struct e1000_hw* hw, u32 offset, u16 data);
+s32 e1000e_phy_has_link_generic(struct e1000_hw* hw,
+                                u32 iterations,
+                                u32 usec_interval,
+                                bool* success);
+s32 e1000e_phy_init_script_igp3(struct e1000_hw* hw);
 enum e1000_phy_type e1000e_get_phy_type_from_id(u32 phy_id);
-s32 e1000e_determine_phy_address(struct e1000_hw *hw);
-s32 e1000e_write_phy_reg_bm(struct e1000_hw *hw, u32 offset, u16 data);
-s32 e1000e_read_phy_reg_bm(struct e1000_hw *hw, u32 offset, u16 *data);
-s32 e1000_enable_phy_wakeup_reg_access_bm(struct e1000_hw *hw, u16 *phy_reg);
-s32 e1000_disable_phy_wakeup_reg_access_bm(struct e1000_hw *hw, u16 *phy_reg);
-s32 e1000e_read_phy_reg_bm2(struct e1000_hw *hw, u32 offset, u16 *data);
-s32 e1000e_write_phy_reg_bm2(struct e1000_hw *hw, u32 offset, u16 data);
-void e1000_power_up_phy_copper(struct e1000_hw *hw);
-void e1000_power_down_phy_copper(struct e1000_hw *hw);
-void e1000e_disable_phy_retry(struct e1000_hw *hw);
-void e1000e_enable_phy_retry(struct e1000_hw *hw);
-s32 e1000e_read_phy_reg_mdic(struct e1000_hw *hw, u32 offset, u16 *data);
-s32 e1000e_write_phy_reg_mdic(struct e1000_hw *hw, u32 offset, u16 data);
-s32 e1000_read_phy_reg_hv(struct e1000_hw *hw, u32 offset, u16 *data);
-s32 e1000_read_phy_reg_hv_locked(struct e1000_hw *hw, u32 offset, u16 *data);
-s32 e1000_read_phy_reg_page_hv(struct e1000_hw *hw, u32 offset, u16 *data);
-s32 e1000_write_phy_reg_hv(struct e1000_hw *hw, u32 offset, u16 data);
-s32 e1000_write_phy_reg_hv_locked(struct e1000_hw *hw, u32 offset, u16 data);
-s32 e1000_write_phy_reg_page_hv(struct e1000_hw *hw, u32 offset, u16 data);
-s32 e1000_link_stall_workaround_hv(struct e1000_hw *hw);
-s32 e1000_copper_link_setup_82577(struct e1000_hw *hw);
-s32 e1000_check_polarity_82577(struct e1000_hw *hw);
-s32 e1000_get_phy_info_82577(struct e1000_hw *hw);
-s32 e1000_phy_force_speed_duplex_82577(struct e1000_hw *hw);
-s32 e1000_get_cable_length_82577(struct e1000_hw *hw);
+s32 e1000e_determine_phy_address(struct e1000_hw* hw);
+s32 e1000e_write_phy_reg_bm(struct e1000_hw* hw, u32 offset, u16 data);
+s32 e1000e_read_phy_reg_bm(struct e1000_hw* hw, u32 offset, u16* data);
+s32 e1000_enable_phy_wakeup_reg_access_bm(struct e1000_hw* hw, u16* phy_reg);
+s32 e1000_disable_phy_wakeup_reg_access_bm(struct e1000_hw* hw, u16* phy_reg);
+s32 e1000e_read_phy_reg_bm2(struct e1000_hw* hw, u32 offset, u16* data);
+s32 e1000e_write_phy_reg_bm2(struct e1000_hw* hw, u32 offset, u16 data);
+void e1000_power_up_phy_copper(struct e1000_hw* hw);
+void e1000_power_down_phy_copper(struct e1000_hw* hw);
+void e1000e_disable_phy_retry(struct e1000_hw* hw);
+void e1000e_enable_phy_retry(struct e1000_hw* hw);
+s32 e1000e_read_phy_reg_mdic(struct e1000_hw* hw, u32 offset, u16* data);
+s32 e1000e_write_phy_reg_mdic(struct e1000_hw* hw, u32 offset, u16 data);
+s32 e1000_read_phy_reg_hv(struct e1000_hw* hw, u32 offset, u16* data);
+s32 e1000_read_phy_reg_hv_locked(struct e1000_hw* hw, u32 offset, u16* data);
+s32 e1000_read_phy_reg_page_hv(struct e1000_hw* hw, u32 offset, u16* data);
+s32 e1000_write_phy_reg_hv(struct e1000_hw* hw, u32 offset, u16 data);
+s32 e1000_write_phy_reg_hv_locked(struct e1000_hw* hw, u32 offset, u16 data);
+s32 e1000_write_phy_reg_page_hv(struct e1000_hw* hw, u32 offset, u16 data);
+s32 e1000_link_stall_workaround_hv(struct e1000_hw* hw);
+s32 e1000_copper_link_setup_82577(struct e1000_hw* hw);
+s32 e1000_check_polarity_82577(struct e1000_hw* hw);
+s32 e1000_get_phy_info_82577(struct e1000_hw* hw);
+s32 e1000_phy_force_speed_duplex_82577(struct e1000_hw* hw);
+s32 e1000_get_cable_length_82577(struct e1000_hw* hw);
 
 #define E1000_MAX_PHY_ADDR 8
 
 /* IGP01E1000 Specific Registers */
 #define IGP01E1000_PHY_PORT_CONFIG 0x10 /* Port Config */
 #define IGP01E1000_PHY_PORT_STATUS 0x11 /* Status */
-#define IGP01E1000_PHY_PORT_CTRL 0x12 /* Control */
+#define IGP01E1000_PHY_PORT_CTRL 0x12   /* Control */
 #define IGP01E1000_PHY_LINK_HEALTH 0x13 /* PHY Link Health */
-#define IGP02E1000_PHY_POWER_MGMT 0x19 /* Power Management */
+#define IGP02E1000_PHY_POWER_MGMT 0x19  /* Power Management */
 #define IGP01E1000_PHY_PAGE_SELECT 0x1F /* Page Select */
-#define BM_PHY_PAGE_SELECT 22 /* Page Select for BM */
+#define BM_PHY_PAGE_SELECT 22           /* Page Select for BM */
 #define IGP_PAGE_SHIFT 5
 #define PHY_REG_MASK 0x1F
 
@@ -93,16 +95,14 @@ s32 e1000_get_cable_length_82577(struct e1000_hw *hw);
 #define BM_WUC_ME_WU_BIT BIT(5)
 
 #define PHY_UPPER_SHIFT 21
-#define BM_PHY_REG(page, reg)                    \
-	(((reg) & MAX_PHY_REG_ADDRESS) |         \
-	 (((page) & 0xFFFF) << PHY_PAGE_SHIFT) | \
-	 (((reg) & ~MAX_PHY_REG_ADDRESS)         \
-	  << (PHY_UPPER_SHIFT - PHY_PAGE_SHIFT)))
+#define BM_PHY_REG(page, reg)                                              \
+  (((reg) & MAX_PHY_REG_ADDRESS) | (((page) & 0xFFFF) << PHY_PAGE_SHIFT) | \
+   (((reg) & ~MAX_PHY_REG_ADDRESS) << (PHY_UPPER_SHIFT - PHY_PAGE_SHIFT)))
 #define BM_PHY_REG_PAGE(offset) ((u16)(((offset) >> PHY_PAGE_SHIFT) & 0xFFFF))
-#define BM_PHY_REG_NUM(offset)                                     \
-	((u16)(((offset) & MAX_PHY_REG_ADDRESS) |                  \
-	       (((offset) >> (PHY_UPPER_SHIFT - PHY_PAGE_SHIFT)) & \
-		~MAX_PHY_REG_ADDRESS)))
+#define BM_PHY_REG_NUM(offset)                               \
+  ((u16)(((offset) & MAX_PHY_REG_ADDRESS) |                  \
+         (((offset) >> (PHY_UPPER_SHIFT - PHY_PAGE_SHIFT)) & \
+          ~MAX_PHY_REG_ADDRESS)))
 
 #define HV_INTC_FC_PAGE_START 768
 #define I82578_ADDR_REG 29
@@ -159,7 +159,7 @@ s32 e1000_get_cable_length_82577(struct e1000_hw *hw);
 
 #define IGP01E1000_PSCFR_SMART_SPEED 0x0080
 
-#define IGP02E1000_PM_SPD 0x0001 /* Smart Power Down */
+#define IGP02E1000_PM_SPD 0x0001     /* Smart Power Down */
 #define IGP02E1000_PM_D0_LPLU 0x0002 /* For D0a states */
 #define IGP02E1000_PM_D3_LPLU 0x0004 /* For all other states */
 
@@ -185,20 +185,20 @@ s32 e1000_get_cable_length_82577(struct e1000_hw *hw);
 #define E1000_KMRNCTRLSTA_OFFSET 0x001F0000
 #define E1000_KMRNCTRLSTA_OFFSET_SHIFT 16
 #define E1000_KMRNCTRLSTA_REN 0x00200000
-#define E1000_KMRNCTRLSTA_CTRL_OFFSET 0x1 /* Kumeran Control */
-#define E1000_KMRNCTRLSTA_DIAG_OFFSET 0x3 /* Kumeran Diagnostic */
-#define E1000_KMRNCTRLSTA_TIMEOUTS 0x4 /* Kumeran Timeouts */
-#define E1000_KMRNCTRLSTA_INBAND_PARAM 0x9 /* Kumeran InBand Parameters */
+#define E1000_KMRNCTRLSTA_CTRL_OFFSET 0x1      /* Kumeran Control */
+#define E1000_KMRNCTRLSTA_DIAG_OFFSET 0x3      /* Kumeran Diagnostic */
+#define E1000_KMRNCTRLSTA_TIMEOUTS 0x4         /* Kumeran Timeouts */
+#define E1000_KMRNCTRLSTA_INBAND_PARAM 0x9     /* Kumeran InBand Parameters */
 #define E1000_KMRNCTRLSTA_IBIST_DISABLE 0x0200 /* Kumeran IBIST Disable */
-#define E1000_KMRNCTRLSTA_DIAG_NELPBK 0x1000 /* Nearend Loopback mode */
+#define E1000_KMRNCTRLSTA_DIAG_NELPBK 0x1000   /* Nearend Loopback mode */
 #define E1000_KMRNCTRLSTA_K1_CONFIG 0x7
 #define E1000_KMRNCTRLSTA_K1_ENABLE 0x0002 /* enable K1 */
-#define E1000_KMRNCTRLSTA_HD_CTRL 0x10 /* Kumeran HD Control */
+#define E1000_KMRNCTRLSTA_HD_CTRL 0x10     /* Kumeran HD Control */
 
 #define IFE_PHY_EXTENDED_STATUS_CONTROL 0x10
-#define IFE_PHY_SPECIAL_CONTROL 0x11 /* 100BaseTx PHY Special Ctrl */
+#define IFE_PHY_SPECIAL_CONTROL 0x11     /* 100BaseTx PHY Special Ctrl */
 #define IFE_PHY_SPECIAL_CONTROL_LED 0x1B /* PHY Special and LED Ctrl */
-#define IFE_PHY_MDIX_CONTROL 0x1C /* MDI/MDI-X Control */
+#define IFE_PHY_MDIX_CONTROL 0x1C        /* MDI/MDI-X Control */
 
 /* IFE PHY Extended Status Control */
 #define IFE_PESC_POLARITY_REVERSED 0x0100
@@ -210,11 +210,11 @@ s32 e1000_get_cable_length_82577(struct e1000_hw *hw);
 /* IFE PHY Special Control and LED Control */
 #define IFE_PSCL_PROBE_MODE 0x0020
 #define IFE_PSCL_PROBE_LEDS_OFF 0x0006 /* Force LEDs 0 and 2 off */
-#define IFE_PSCL_PROBE_LEDS_ON 0x0007 /* Force LEDs 0 and 2 on */
+#define IFE_PSCL_PROBE_LEDS_ON 0x0007  /* Force LEDs 0 and 2 on */
 
 /* IFE PHY MDIX Control */
 #define IFE_PMC_MDIX_STATUS 0x0020 /* 1=MDI-X, 0=MDI */
-#define IFE_PMC_FORCE_MDIX 0x0040 /* 1=force MDI-X, 0=force MDI */
-#define IFE_PMC_AUTO_MDIX 0x0080 /* 1=enable auto, 0=disable */
+#define IFE_PMC_FORCE_MDIX 0x0040  /* 1=force MDI-X, 0=force MDI */
+#define IFE_PMC_AUTO_MDIX 0x0080   /* 1=enable auto, 0=disable */
 
 #endif

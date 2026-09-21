@@ -299,3 +299,101 @@ subsequent formatting experiments.
 - [Chromium configuration — clang-format 18](additional-files/chromium-files/chromium-18.clang-format)
 - [Chromium configuration — clang-format 22](additional-files/chromium-files/chromium-22.clang-format)
 - [Unified configuration diff](additional-files/chromium-files/chromium-files-comp.txt)
+
+## Switching to Chromium style with clang-format 18
+
+### Experiment setup
+
+The Linux configuration in `dummy/.clang-format` was replaced with
+the Chromium configuration exported by clang-format 18.1.8.
+
+The input was the previously Linux-formatted project containing
+four `.c` files and four `.h` files.
+
+Commands:
+
+```bash
+cp additional-files/chromium-files/chromium-18.clang-format dummy/.clang-format
+
+./clang-format-scripts/make_format_clang-18.sh ./dummy
+./clang-format-scripts/check_format.sh ./dummy
+
+git --no-pager diff --stat -- dummy/src dummy/include
+git --no-pager diff -- dummy/src/manage.c
+```
+
+### Verification results
+
+Formatting with clang-format 18 completed successfully, and the script's
+own verification reported `[format-pass]`.
+
+The subsequent check with both formatter versions produced:
+
+| Formatter | Configuration | Result |
+|---|---|---|
+| clang-format 18.1.8 | Chromium exported by version 18 | PASS |
+| clang-format 22.1.8 | Chromium exported by version 18 | PASS |
+
+Both versions accepted the source formatting with the same Chromium 18
+configuration. This does not establish what would happen with the
+separately exported Chromium 22 configuration.
+
+### Git statistics
+
+Git reported:
+
+```text
+8 files changed, 4098 insertions(+), 4208 deletions(-)
+```
+
+These statistics cover only `dummy/src` and `dummy/include`.
+They exclude the configuration replacement, execution log, report,
+and project journal.
+
+### Observed formatting changes
+
+The configuration change introduced the following differences:
+
+| Setting | Previous Linux configuration | Chromium 18 configuration |
+|---|---|---|
+| `IndentWidth` | `8` | `2` |
+| `UseTab` | `Always` | `Never` |
+| `BreakBeforeBraces` | `Custom` | `Attach` |
+| `PointerAlignment` | `Right` | `Left` |
+| `ColumnLimit` | `80` | `80` |
+
+The diff for `dummy/src/manage.c` illustrates the resulting changes:
+
+- Tab-based indentation was replaced with two-space indentation.
+- Function opening braces moved onto the function signature line.
+- Pointer declarations changed from forms such as `u8 *buffer`
+  to `u8* buffer`.
+- Function parameters, calls, and expressions were wrapped differently.
+- Comment indentation was adjusted to match the surrounding code.
+
+For example, the function opening changed from:
+
+```c
+static u8 e1000_calculate_checksum(u8 *buffer, u32 length)
+{
+```
+
+to:
+
+```c
+static u8 e1000_calculate_checksum(u8* buffer, u32 length) {
+```
+
+### Conclusions
+
+Switching from the Linux configuration to Chromium 18 changed all eight
+source files and produced a substantially larger diff than the initial
+formatting with the Linux configuration.
+
+The new formatting passed verification with both clang-format 18 and 22
+using the Chromium 18 configuration. These checks establish formatting
+consistency; they do not verify compilation or runtime behavior.
+
+### Execution log
+
+- [Chromium 18 formatting results](additional-files/makes/clang-chromium-18-format-make.txt)
